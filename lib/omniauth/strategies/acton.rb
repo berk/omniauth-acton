@@ -26,9 +26,9 @@ module OmniAuth
     class Acton < OmniAuth::Strategies::OAuth2
 
       option :client_options, {
-        :site           => 'https://restapi.actonsoftware.com',
-        :authorize_url  => '/authorize',
-        :token_url      => '/token'
+          site: 'https://restapi.actonsoftware.com',
+          authorize_url: '/authorize',
+          token_url: '/token'
       }
 
       option :name, 'acton'
@@ -38,17 +38,17 @@ module OmniAuth
       uid { raw_info['account_id'] }
 
       info do
-        prune!({
-          'name'             => raw_info['user_name'],
-          'email'            => raw_info['user_email'],
-          'type'             => raw_info['user_type'],
-        })
+        prune!(
+            'name' => raw_info['user_name'],
+            'email' => raw_info['user_email'],
+            'type' => raw_info['user_type'],
+        )
       end
 
-      extra do 
-        { 'user' =>  prune!(raw_info) }
+      extra do
+        {'user' => prune!(raw_info)}
       end
-      
+
       def raw_info
         @raw_info ||= access_token.get('/api/1/account').parsed
       end
