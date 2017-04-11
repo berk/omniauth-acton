@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version  = OmniAuth::Acton::VERSION
   s.authors  = ['Michael Berkovich']
   s.email    = ['theiceberk@gmail.com']
-  s.summary  = 'Act-On strategy for OmniAuth'
+  s.summary  = 'OmniAuth strategy for Act-On'
   s.homepage = 'https://github.com/berk/omniauth-acton'
-  s.description = 'Acton strategy for SSO using OmniAuth framework'
+  s.description = 'Act-On strategy for SSO using OmniAuth framework'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
