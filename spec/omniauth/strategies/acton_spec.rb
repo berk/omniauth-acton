@@ -22,21 +22,21 @@ describe OmniAuth::Strategies::Acton do
 
   describe '#client' do
     it 'has correct site' do
-      subject.client.site.should eq('https://api.getbase.com')
+      subject.client.site.should eq('https://restapi.actonsoftware.com')
     end
 
     it 'has correct authorize url' do
-      subject.client.options[:authorize_url].should eq('/oauth2/authorize')
+      subject.client.options[:authorize_url].should eq('/authorize')
     end
 
     it 'has correct token url' do
-      subject.client.options[:token_url].should eq('/oauth2/token')
+      subject.client.options[:token_url].should eq('/token')
     end
   end
 
   describe '#uid' do
     before :each do
-      subject.stub(:raw_info) { { 'id' => '123' } }
+      subject.stub(:raw_info) { { 'account_id' => '123' } }
     end
     
     it 'returns the id from raw_info' do
@@ -46,7 +46,7 @@ describe OmniAuth::Strategies::Acton do
   
   describe '#info' do
     before :each do
-      @raw_info ||= { 'name' => 'Alex' }
+      @raw_info ||= { 'user_name' => 'Alex' }
       subject.stub(:raw_info) { @raw_info }
     end
     
@@ -71,20 +71,20 @@ describe OmniAuth::Strategies::Acton do
     
     it 'performs a GET to /v2/accounts/self' do
       @access_token.stub(:get) { double('OAuth2::Response').as_null_object }
-      @access_token.should_receive(:get).with('/v2/accounts/self')
+      @access_token.should_receive(:get).with('/api/1/account')
       subject.raw_info
     end
     
     it 'returns a Hash' do
-      @access_token.stub(:get).with('/v2/accounts/self') do
+      @access_token.stub(:get).with('/api/1/account') do
         raw_response = double('Faraday::Response')
-        raw_response.stub(:body) { '{"data": { "ohai": "thar" }}' }
+        raw_response.stub(:body) { '{ "user_name": "Michael" }' }
         raw_response.stub(:status) { 200 }
         raw_response.stub(:headers) { { 'Content-Type' => 'application/json' } }
         OAuth2::Response.new(raw_response)
       end
       subject.raw_info.should be_a(Hash)
-      subject.raw_info['ohai'].should eq('thar')
+      subject.raw_info['user_name'].should eq('Michael')
     end
   end
 
