@@ -7,7 +7,7 @@ Acton OAuth2 Strategy for OmniAuth 1.0.
 
 Supports the OAuth 2.0 server-side. Read the Acton docs for more details: 
 
-https://developers.getbase.com/docs/rest/articles/oauth2/introduction
+https://developer.act-on.com/documentation/oauth/
 
 ## Installing
 
